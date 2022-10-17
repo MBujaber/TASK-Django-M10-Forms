@@ -2,6 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from stores import models
 from .forms import StoreItemForm
+from .models import StoreItem
 
 
 def get_store_items(request: HttpRequest) -> HttpResponse:
@@ -22,3 +23,23 @@ def create_store_item(request):
 
     context = {"form": form}
     return render(request, "create_store_item.html", context)
+
+
+def update_store_item(request, item_id):
+    item = StoreItem.objects.get(id=item_id)
+    form = StoreItemForm(instance=item)
+    if request.method == "POST":
+        form = StoreItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect("store-item-list")
+    context = {
+        "item": item,
+        "form": form,
+    }
+    return render(request, 'update_store_item.html', context)
+
+
+def delete_store_item(request, item_id):
+    StoreItem.objects.get(id=item_id).delete()
+    return redirect("store-item-list")
