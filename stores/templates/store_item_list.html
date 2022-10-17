@@ -12,7 +12,7 @@
     />
     <title>Store Items</title>
   </head>
-  <body>
+  <body class="p-3 mb-2 bg-light text-dark">
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand">WAM Store</a>
@@ -28,7 +28,7 @@
       <div class="row g-3 ">
         {% if store_items %} {% for item in store_items %}
         <div class="col-lg-4">
-          <div class="card">
+          <div class="card shadow my-4">
             <div class="card-body">
               <img
               src={{item.image}}
@@ -39,7 +39,34 @@
                 <h6 class="card-subtitle mb-2 text-muted">Kind: {{ item.kind }}</h6>
                 <p class="card-text">{{ item.description }}</p> 
                 <a class="btn btn-primary btn-sm" href="{% url 'update-store-item' item_id=item.id %}">Edit</a>
-                <a class="btn btn-primary btn-sm" href="{% url 'delete-store-item' item_id=item.id %}">Delete</a>
+                
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Alert</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure you want to delete?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <a class="btn btn-danger" href="{% url 'delete-store-item' item_id=item.id %}">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                <!-- <a class="btn btn-primary btn-sm" href="{% url 'delete-store-item' item_id=item.id %}">Delete</a> -->
               </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from crispy_bootstrap5.bootstrap5 import FloatingField
 
 
 class StoreItem(models.Model):
